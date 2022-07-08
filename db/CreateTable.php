@@ -14,7 +14,7 @@ function createEmployeeTable() {
         mail varchar(200),
         password varchar(20),
         id_department int
-        )AUTO_INCREMENT = 10000;";
+        )AUTO_INCREMENT = 10000";
 
     $stmt = $mysql->prepare($query);
     $stmt->execute();
