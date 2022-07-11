@@ -8,10 +8,25 @@ function insertEmployee($name, $kana, $mail, $pass, $depId){
     }
     $stmt = $mysql->prepare("INSERT INTO employee (nm_employee, kn_employee, mail, password, id_department) VALUES (?, ?, ?, ?, ?)");
 
-    $stmt->bind_param(1, $name);
-    $stmt->bind_param(2, $kana);
-    $stmt->bind_param(3, $mail);
-    $stmt->bind_param(4, $pass);
-    $stmt->bind_param(5, $depId);
+    $stmt->bind_param('ssssd',$name, $kana, $mail, $pass, $depId);
+
+    $stmt->execute();
+
+    $stmt->close();
+    $mysql->close();
 }
+
+function escape($inputText){
+  return htmlspecialchars($inputText, ENT_QUOTES, 'UTF-8');
+}
+
+$name = escape($_POST['name']);
+$kana = escape($_POST['kana']);
+$mail = escape($_POST['mail']);
+$pass = escape($_POST['pass']);
+$depId = escape($_POST['depId']);
+
+insertEmployee($name, $kana, $mail, $pass, $depId);
+
+header("Location:createUser.php");
 ?>
